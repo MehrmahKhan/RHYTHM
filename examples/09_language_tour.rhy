@@ -1,0 +1,48 @@
+// A tour of the language itself. No music here, only say, so you can see
+// variables, loops, functions, lists and operators at work.
+
+fn factorial(n) {
+    if n <= 1 {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+fn is_even(n) {
+    return n % 2 == 0;
+}
+
+let total = 0;
+for i in 1..11 {
+    if is_even(i) {
+        skip;
+    }
+    total += i;
+}
+say "sum of the odd numbers below 11:", total;
+
+let count = 0;
+let n = 1;
+while 1 {
+    n *= 2;
+    count += 1;
+    if n > 1000 {
+        stop;
+    }
+}
+say "doublings needed to pass 1000:", count, "and the value is", n;
+
+say "5! is", factorial(5);
+
+let xs = [5, 3, 8];
+push(xs, 1);
+xs[0] += 10;
+say xs, "has length", len(xs), "and the last item is", pop(xs);
+
+say "and / or stop early:", 0 and 1 / 0, 1 or 1 / 0;
+say "notes are numbers:", C4, C4 + 7;
+say "not:", not 0, not 5, "chained:", 3 < 4 and 4 < 5;
+
+for i in 10..0 by -3 {
+    say "countdown", i;
+}

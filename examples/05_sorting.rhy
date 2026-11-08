@@ -1,0 +1,39 @@
+// Bubble sort, heard before and after.
+// The same track is played twice. A track runs at the moment of play, so the
+// second time it plays the list as it is by then, which is sorted.
+tempo 140;
+
+let tune = [G4, C4, E5, A4, D4, B4, F4, C5];
+
+fn bubble_sort(list a) {
+    let n = len(a);
+    let swapped = 1;
+    while swapped {
+        swapped = 0;
+        for i in 0..n - 1 {
+            if a[i] > a[i + 1] {
+                let t = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = t;
+                swapped = 1;
+            }
+        }
+        n -= 1;
+    }
+    return 0;
+}
+
+track hear {
+    instrument triangle;
+    for n in tune {
+        note n for 0.5 beats;
+    }
+}
+
+say "before:", tune;
+play hear to "unsorted.wav";
+
+bubble_sort(tune);
+
+say "after:", tune;
+play hear to "sorted.wav";

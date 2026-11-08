@@ -1,0 +1,36 @@
+// A random walk over a pentatonic scale, with a chord pad underneath.
+// rand() starts from a fixed seed, so the music is the same every run
+// until you change the number given to seed().
+tempo 110;
+seed(42);
+
+let pent = [0, 2, 4, 7, 9];
+
+fn clamp(x, lo, hi) {
+    return max(lo, min(hi, x));
+}
+
+fn pitch(pos) {
+    return C4 + pent[pos % 5] + 12 * floor(pos / 5);
+}
+
+track walk {
+    instrument triangle;
+    volume 85;
+    let pos = 4;
+    repeat 24 times {
+        note pitch(pos) for 0.5 beats;
+        pos = clamp(pos + rand(3) - 1, 0, 9);
+    }
+    note C4 for 2 beats;
+}
+
+track pad {
+    instrument sine;
+    volume 40;
+    repeat 3 times {
+        chord [C3, E3, G3] for 4 beats;
+    }
+}
+
+play;

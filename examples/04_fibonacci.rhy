@@ -1,0 +1,42 @@
+// A melody built from the Fibonacci numbers.
+// Shows recursion, lists that grow with push, and a function that maps
+// any whole number onto a major scale, climbing an octave every 7 steps.
+tempo 132;
+
+let scale = [0, 2, 4, 5, 7, 9, 11];
+
+fn fib(n) {
+    if n < 2 {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+fn degree(root, d) {
+    return root + scale[d % len(scale)] + 12 * floor(d / len(scale));
+}
+
+let seq = zeros(0);
+for i in 0..12 {
+    push(seq, fib(i));
+}
+say "fibonacci numbers:", seq;
+
+track melody {
+    instrument triangle;
+    for f in seq {
+        note degree(C3, f % 21) for 0.5 beats;
+    }
+    note C4 for 2 beats;
+}
+
+track pulse {
+    instrument square;
+    volume 25;
+    repeat 12 times {
+        note C2 for 0.5 beats;
+    }
+    note C2 for 2 beats;
+}
+
+play;

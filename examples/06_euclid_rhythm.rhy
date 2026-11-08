@@ -1,0 +1,44 @@
+// Spreading hits evenly over a bar (Euclidean rhythms) and Euclid's gcd.
+// hit(i, k, n) is true for k of every n steps, as evenly spaced as possible.
+tempo 120;
+
+fn gcd(a, b) {
+    while b != 0 {
+        let t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+fn hit(i, k, n) {
+    return (i * k) % n < k;
+}
+
+say "gcd of 48 and 18 is", gcd(48, 18);
+
+track kick {
+    instrument sine;
+    volume 100;
+    for step in 0..16 {
+        if hit(step, 5, 16) {
+            note C2 for 0.25 beats;
+        } else {
+            rest for 0.25 beats;
+        }
+    }
+}
+
+track hat {
+    instrument square;
+    volume 22;
+    for step in 0..16 {
+        if hit(step, 11, 16) {
+            note F#6 for 0.25 beats;
+        } else {
+            rest for 0.25 beats;
+        }
+    }
+}
+
+play kick * 4, hat * 4;

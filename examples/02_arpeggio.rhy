@@ -1,0 +1,29 @@
+// The example from the project proposal: a function that plays a scale
+// pattern from any starting note, a list of intervals, loops and two tracks.
+tempo 120;
+
+let scale = [0, 2, 4, 5, 7, 9, 11];
+
+fn arpeggio(root, list steps) {
+    for s in steps {
+        note root + s for 0.5 beats;
+    }
+}
+
+track melody {
+    instrument triangle;
+    arpeggio(C4, scale);
+    arpeggio(C5, scale);
+    note C6 for 2 beats;
+}
+
+track bass {
+    instrument square;
+    volume 40;
+    repeat 8 times {
+        note C2 for 1 beat;
+        rest for 1 beat;
+    }
+}
+
+play melody, bass;

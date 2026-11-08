@@ -1,0 +1,32 @@
+// Sieve of Eratosthenes, then the prime numbers become a melody.
+// Shows lists as arrays, nested loops and indexing.
+tempo 150;
+
+let limit = 60;
+let flags = zeros(limit);
+let primes = zeros(0);
+
+for n in 2..limit {
+    if flags[n] == 0 {
+        push(primes, n);
+        let m = n * n;
+        while m < limit {
+            flags[m] = 1;
+            m += n;
+        }
+    }
+}
+say "primes below", limit, primes;
+
+let pent = [0, 2, 4, 7, 9];
+
+track melody {
+    instrument saw;
+    volume 50;
+    for p in primes {
+        note C4 + pent[p % 5] + 12 * (p % 2) for 0.5 beats;
+    }
+    chord [C4, E4, G4] for 2 beats;
+}
+
+play;

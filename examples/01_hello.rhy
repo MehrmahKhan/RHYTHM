@@ -1,0 +1,10 @@
+// The smallest RHYTHM program: one track, three notes.
+tempo 120;
+
+track hello {
+    note C4 for 1 beat;
+    note E4 for 1 beat;
+    note G4 for 2 beats;
+}
+
+play;

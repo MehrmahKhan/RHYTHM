@@ -1,0 +1,35 @@
+// Twinkle Twinkle Little Star (traditional tune).
+// The melody is stored as a list of notes and played with a for loop.
+// A small function decides which notes are held for two beats.
+tempo 100;
+
+let tune = [C4, C4, G4, G4, A4, A4, G4, F4, F4, E4, E4, D4, D4, C4];
+let bass_line = [C3, E3, F3, C3, F3, C3, G3, C3];
+
+fn is_long(i) {
+    return i == 6 or i == 13;
+}
+
+track melody {
+    instrument triangle;
+    volume 90;
+    let i = 0;
+    for n in tune {
+        if is_long(i) {
+            note n for 2 beats;
+        } else {
+            note n for 1 beat;
+        }
+        i += 1;
+    }
+}
+
+track bass {
+    instrument square;
+    volume 30;
+    for r in bass_line {
+        note r for 2 beats;
+    }
+}
+
+play to "twinkle.wav";
