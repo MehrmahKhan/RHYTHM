@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# rhythmc  --  compile a RHYTHM program to a native Linux executable.
+#
+#   ./rhythmc program.rhy              produces ./program   and ./program.ll
+#   ./rhythmc program.rhy -o name      produces ./name      and ./name.ll
+#
+# Steps: rhythm_ir (Flex + Bison) writes LLVM IR, then clang turns the IR into
+# an executable and links the runtime library. If clang is not installed it
+# falls back to llc plus the system C compiler.
+
+set -e
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+IR="$HERE/bin/rhythm_ir"
+RT="$HERE/bin/librhythm_rt.a"
+
+usage() {
+    echo "usage: $0 program.rhy [-o executable]"
+    exit "${1:-2}"
+}
+
+SRC=""
+OUT=""
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -o) [ $# -ge 2 ] || usage; OUT="$2"; shift 2 ;;
+        -h) usage 0 ;;
+        -*) echo "unknown option $1"; usage ;;
+        *)  SRC="$1"; shift ;;
+    esac
+done
+[ -n "$SRC" ] || usage
+[ -f "$SRC" ] || { echo "$0: cannot find $SRC"; exit 2; }
+
+if [ ! -x "$IR" ] || [ ! -f "$RT" ]; then
+    echo "building the compiler first (make)..."
+    make -C "$HERE" all >/dev/null
+fi
+
+if [ -z "$OUT" ]; then
+    base="$(basename "$SRC")"
+    OUT="${base%.rhy}"
+fi
+LL="$OUT.ll"
+
+"$IR" "$SRC" -o "$LL"
+
+if command -v clang >/dev/null 2>&1; then
+    clang -O2 -Wno-override-module "$LL" "$RT" -lm -o "$OUT"
+elif command -v llc >/dev/null 2>&1; then
+    OBJ="$(mktemp --suffix=.o)"
+    llc -O2 -filetype=obj -relocation-model=pic "$LL" -o "$OBJ"
+    "${CC:-cc}" "$OBJ" "$RT" -lm -o "$OUT"
+    rm -f "$OBJ"
+else
+    echo "$0: neither clang nor llc was found, please install LLVM (see README.pdf)"
+    exit 2
+fi
+
+echo "compiled $SRC -> $OUT (LLVM IR kept in $LL)"
