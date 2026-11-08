@@ -1,0 +1,10 @@
+build/
+bin/
+tests/out/
+*.wav
+*.ll
+*.o
+*.a
+src/lex.yy.c
+src/*.tab.c
+src/*.tab.h
