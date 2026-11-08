@@ -1,0 +1,4 @@
+// EXPECT: a chord needs at least one note
+tempo 120;
+track t { chord zeros(0) for 1 beat; }
+play;

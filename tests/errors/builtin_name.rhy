@@ -1,0 +1,2 @@
+// EXPECT: 'len' is the name of a built in function and cannot be redefined
+fn len(x) { return x; }

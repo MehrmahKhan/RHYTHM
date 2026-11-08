@@ -1,0 +1,3 @@
+// EXPECT: pop on an empty list
+let a = zeros(0);
+say pop(a);

@@ -1,0 +1,3 @@
+// EXPECT: recursion is too deep (the limit is 2000 nested calls)
+fn f(n) { return f(n + 1); }
+say f(0);

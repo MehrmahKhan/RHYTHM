@@ -1,0 +1,3 @@
+// EXPECT: index 5 is out of range for a list of length 2
+let a = [1, 2];
+say a[5];

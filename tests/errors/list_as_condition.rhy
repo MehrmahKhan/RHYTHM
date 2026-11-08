@@ -1,0 +1,3 @@
+// EXPECT: expected a number here but found a list
+let a = [1];
+if a { say 1; }

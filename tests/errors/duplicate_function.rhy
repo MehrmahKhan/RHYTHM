@@ -1,0 +1,3 @@
+// EXPECT: function 'f' is already defined (first defined on line 2)
+fn f() { return 1; }
+fn f() { return 2; }

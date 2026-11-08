@@ -1,0 +1,2 @@
+// EXPECT: a function can only be defined at the top level
+if 1 { fn f() { return 1; } }

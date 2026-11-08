@@ -1,0 +1,5 @@
+// EXPECT: invalid repeat count 0: it must be a whole number between 1 and 1000
+tempo 120;
+let c = 0;
+track t { note C4 for 1 beat; }
+play t * c;

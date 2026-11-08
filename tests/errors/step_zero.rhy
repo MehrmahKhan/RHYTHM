@@ -1,0 +1,2 @@
+// EXPECT: a for loop cannot have a step of 0
+for i in 0..5 by 0 { say i; }

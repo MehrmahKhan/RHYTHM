@@ -1,0 +1,3 @@
+// EXPECT: division by zero
+let a = 0;
+say 5 / a;

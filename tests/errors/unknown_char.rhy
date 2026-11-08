@@ -1,0 +1,3 @@
+// EXPECT: unexpected character '@'
+let x = 1;
+@

@@ -1,0 +1,2 @@
+// EXPECT: invalid note name 'H4': the letter must be between A and G
+let x = H4;

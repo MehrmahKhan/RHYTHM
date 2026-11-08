@@ -1,0 +1,2 @@
+// EXPECT: note can only be used inside a track or a function
+note C4 for 1 beat;

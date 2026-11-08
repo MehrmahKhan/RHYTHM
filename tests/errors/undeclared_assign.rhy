@@ -1,0 +1,2 @@
+// EXPECT: variable 'x' is not declared
+x = 5;

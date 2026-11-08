@@ -1,0 +1,2 @@
+// EXPECT: play: there are no tracks to play
+play;

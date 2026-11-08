@@ -1,0 +1,2 @@
+// EXPECT: rand needs a whole number between 1 and 1000000000, not 0
+say rand(0);

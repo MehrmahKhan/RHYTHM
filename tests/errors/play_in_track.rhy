@@ -1,0 +1,2 @@
+// EXPECT: play can only be used at the top level
+track a { play; }

@@ -1,0 +1,133 @@
+// Tricky corners of the language, used to check that the interpreter and the
+// compiled program agree. Output only, apart from one small track at the end.
+let counter = 0;
+
+fn bump() {
+    counter += 1;
+    return counter;
+}
+
+// short circuit: the right side must not run when the left decides
+let r1 = 0 and bump();
+let r2 = 1 or bump();
+let r3 = 1 and bump();
+let r4 = 0 or bump();
+say "short circuit:", r1, r2, r3, r4, "counter", counter;
+
+// nested and / or with side effects in the right operands
+let r5 = (1 and (0 or bump())) and (bump() > 100 or bump() > 0);
+say "nested:", r5, "counter", counter;
+
+// early return from inside nested loops
+fn find_pair(target) {
+    for a in 1..10 {
+        for b in a..10 {
+            if a * b == target {
+                return a * 100 + b;
+            }
+        }
+    }
+    return 0 - 1;
+}
+say "pair for 12:", find_pair(12), "pair for 97:", find_pair(97);
+
+// stop and skip only affect the innermost loop
+let hits = 0;
+for i in 0..5 {
+    for j in 0..5 {
+        if j == 3 { stop; }
+        if (i + j) % 2 == 0 { skip; }
+        hits += 1;
+    }
+    if i == 3 { stop; }
+}
+say "hits:", hits;
+
+// while with skip needs the update before skip
+let k = 0;
+let evens = zeros(0);
+while k < 10 {
+    k += 1;
+    if k % 2 == 1 { skip; }
+    push(evens, k);
+}
+say evens;
+
+// foreach with stop, and a list that grows while it is walked
+let grow = [1, 2, 3];
+let seen = 0;
+for g in grow {
+    seen += 1;
+    if g < 3 { push(grow, g + 10); }
+    if seen > 8 { stop; }
+}
+say "walked", seen, "items:", grow;
+
+// shadowing in inner scopes
+let x = 10;
+if 1 {
+    let x = 20;
+    say "inner x", x;
+}
+say "outer x", x;
+
+// mutual recursion, declared in either order
+fn is_even(n) { if n == 0 { return 1; } return is_odd(n - 1); }
+fn is_odd(n) { if n == 0 { return 0; } return is_even(n - 1); }
+say "even 10:", is_even(10), "odd 7:", is_odd(7), "odd 10:", is_odd(10);
+
+// lists are shared, not copied, unless copy() is used
+fn double_all(list a) {
+    for i in 0..len(a) { a[i] *= 2; }
+    return 0;
+}
+let orig = [1, 2, 3];
+let dup = copy(orig);
+double_all(orig);
+say "orig", orig, "copy", dup;
+
+// compound assignment evaluates the right side once, element is read after
+let arr = [10, 20, 30];
+arr[bump() - bump() + 1] += 5;
+say arr, "counter", counter;
+
+// division and modulo with negatives and fractions
+say 7 / 2, 0 - 7 / 2, 7 % 3, (0 - 7) % 3, 7.5 % 2;
+
+// for loops with fractional and negative steps, and ranges that are empty
+for f in 0..1 by 0.25 { say "f", f; }
+for d in 3..0 by 0 - 1 { say "d", d; }
+for e in 5..5 { say "never"; }
+for h in 5..0 { say "never"; }
+
+// a loop variable can be changed inside the body
+for q in 0..10 {
+    if q == 2 { q = 7; }
+    say "q", q;
+}
+
+// min, max, pow, abs, floor
+say min(3, 9), max(3, 9), pow(2, 10), abs(0 - 4.5), floor(2.9), floor(0 - 2.1);
+
+// notes are numbers and can be transposed
+let chord_root = D4;
+say "D4 up a fifth:", chord_root + 7, "Bb2:", Bb2, "F#5:", F#5;
+
+// seeded random numbers are the same in both phases
+seed(7);
+let dice = zeros(0);
+repeat 8 times { push(dice, rand(6) + 1); }
+say "dice:", dice;
+
+// a track that returns early and uses a function result as a duration
+fn half(n) { return n / 2; }
+
+track short {
+    note C4 for half(2) beats;
+    if 1 { return; }
+    note D4 for 1 beat;
+}
+
+tempo 90;
+play short * 2 to "edge.wav";
+say "done";

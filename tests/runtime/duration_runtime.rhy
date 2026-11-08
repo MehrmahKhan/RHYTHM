@@ -1,0 +1,5 @@
+// EXPECT: invalid duration 0: a duration must be greater than zero beats
+tempo 120;
+let d = 0;
+track t { note C4 for d beats; }
+play;

@@ -1,0 +1,2 @@
+// EXPECT: invalid tempo 1000
+tempo 1000;

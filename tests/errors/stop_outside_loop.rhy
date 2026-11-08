@@ -1,0 +1,2 @@
+// EXPECT: stop can only be used inside a loop
+stop;

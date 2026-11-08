@@ -1,0 +1,2 @@
+// EXPECT: expected a list here but found a number
+for x in 5 { say x; }

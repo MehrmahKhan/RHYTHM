@@ -1,0 +1,3 @@
+// EXPECT: argument 1 of 'f' must be a list but got a number
+fn f(list a) { return 0; }
+f(3);

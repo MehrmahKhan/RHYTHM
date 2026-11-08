@@ -1,0 +1,5 @@
+// EXPECT: invalid note number 148: notes must be whole numbers between 0 and 127
+tempo 120;
+let k = 40;
+track t { note C8 + k for 1 beat; }
+play;

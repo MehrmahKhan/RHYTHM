@@ -1,0 +1,5 @@
+// EXPECT: invalid volume 200: volume must be a whole number between 0 and 100
+tempo 120;
+let v = 200;
+track t { volume v; note C4 for 1 beat; }
+play;

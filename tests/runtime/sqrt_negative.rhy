@@ -1,0 +1,2 @@
+// EXPECT: sqrt of a negative number (-4)
+say sqrt(0 - 4);

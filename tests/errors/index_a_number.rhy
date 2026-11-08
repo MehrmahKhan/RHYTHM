@@ -1,0 +1,3 @@
+// EXPECT: 'a' is a number, only lists can be indexed
+let a = 5;
+say a[0];

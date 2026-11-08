@@ -1,0 +1,3 @@
+// EXPECT: play: track 'ghost' is not defined
+track a { note C4 for 1 beat; }
+play ghost;

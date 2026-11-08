@@ -1,0 +1,2 @@
+// EXPECT: invalid repeat count -1: it must be a whole number between 0 and 1000000
+repeat -1 times { say 1; }

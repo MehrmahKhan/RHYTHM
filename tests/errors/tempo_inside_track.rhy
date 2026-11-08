@@ -1,0 +1,2 @@
+// EXPECT: tempo can only be set at the top level
+track a { tempo 100; }

@@ -1,0 +1,3 @@
+// EXPECT: a note can only happen while a track is playing
+fn f() { note C4 for 1 beat; return 0; }
+f();

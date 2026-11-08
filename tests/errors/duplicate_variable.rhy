@@ -1,0 +1,3 @@
+// EXPECT: variable 'x' is already declared in this scope (line 2)
+let x = 1;
+let x = 2;

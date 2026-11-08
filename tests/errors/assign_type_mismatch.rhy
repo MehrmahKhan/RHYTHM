@@ -1,0 +1,3 @@
+// EXPECT: cannot assign a list to 'a' because it holds a number
+let a = 1;
+a = [1];

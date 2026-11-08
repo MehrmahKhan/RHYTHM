@@ -1,0 +1,2 @@
+// EXPECT: invalid duration -2
+track a { note C4 for -2 beats; }

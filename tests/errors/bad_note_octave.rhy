@@ -1,0 +1,2 @@
+// EXPECT: invalid note name 'C9': the octave must be between 0 and 8
+let x = C9;

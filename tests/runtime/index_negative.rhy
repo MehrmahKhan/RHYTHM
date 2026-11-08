@@ -1,0 +1,4 @@
+// EXPECT: index -1 is out of range for a list of length 2
+let a = [1, 2];
+let i = 0 - 1;
+say a[i];

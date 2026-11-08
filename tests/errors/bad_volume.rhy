@@ -1,0 +1,2 @@
+// EXPECT: invalid volume 150: volume must be a whole number between 0 and 100
+track a { volume 150; }
